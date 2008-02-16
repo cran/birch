@@ -1,0 +1,22 @@
+S3method(print, birch)
+S3method(summary, birch)
+S3method(plot, birch)
+S3method(pairs, birch)
+S3method("[", birch)
+S3method(dim, birch)
+S3method(length, birch)
+S3method(cbind, birch)
+S3method(print, summary.birch)
+S3method(summary, covMcd.birch)
+S3method(summary, lts.birch)
+S3method(points, birch)
+S3method(lines, birch)
+
+import(ellipse)
+## Main
+export(birch, birch.addToTree, birch.getTree, birch.killTree)
+## Robust
+export(lts.birch, covMcd.birch, rlga.birch, ltsBirch.refinement, covMcdBirch.refinement)
+## Clustering
+export(lga.birch, kmeans.birch, dist.birch) 
+useDynLib(birch, LL_main)
