@@ -33,7 +33,7 @@
  \item{scalar}{A scalar to add as a column to the birch object.}
 \item{centers}{A Boolean. If TRUE, then just plots the centers of the
 subclusters. See the details for more information.}
-\item{col}{Color argument for lines.}
+\item{col}{Color argument for the \code{lines} method.}
 \item{\dots}{Pass additional information to the respective methods.}
 }
 
@@ -42,18 +42,19 @@ The \code{dim} method returns a vector of length three
   containing the total number of observations in the tree, the number of
   columns of the data set, and the number of subclusters. The
 \code{length} method just returns the number of subclusters. Note that
-both of these commands operate on the submitted object, and do not check
+both of these commands operate on the object given as an argument, and do not check
 if the tree has been updated (e.g. by adding data with the
 \code{birch.addToTree} command).
 
 The \code{summary} method returns the mean and covariance of the whole
-birch object - equivalently, the whole underlying data set.
+birch object - equivalently (and, as it turns out, identically) the whole underlying data set.
 
 The \sQuote{[i,j]} method selects the i-th subcluster and the j-th
 column of the birch object, and has functionality similar to that of the
 usual indexing of matrices. Similarly, the \code{cbind} method
 effectively inserts a column containing a scalar (recycled to the
-appropriate length) in front of the data set. 
+appropriate length) in front of the data set. See note for a caveat with
+these methods.
 
   The \code{print}, \code{plot}, \code{pairs}, \code{points} and
   \code{lines} methods return  nothing.
@@ -61,15 +62,16 @@ appropriate length) in front of the data set.
 
 \details{
  Most of these methods do not require further explanation, as their
- behaviour is fairly standard. The plot and pairs methods, does something
+ behaviour is fairly standard. The plot and pairs methods, however, do something
  a little different. 
 
-While they accept all the usual arguments that plot has, instead of
-producing plots of the values, which is not possible with a
-birch object, instead these methods produce ellipses for each
-subclusters, based on its covariance structure, and making the
-assumption that the underlying is multivariate normal. The ellipses are
-then formed (using the ellipse package) at the 95\% confidence level.
+While they accept all the usual arguments as plot (the arguments are simply
+passed on to e.g. \code{plot.xy}), instead of simply producing points/lines of the
+values, which is not possible with a birch object, these methods produce
+ellipses for each subcluster, based on its covariance structure, and
+making the assumption that the underlying data is multivariate normal. The
+ellipses are then formed (using the ellipse package) at the 95\%
+confidence level.
 
 However, if there are a lot of subclusters, then this plot gets
 \dQuote{messy}, and so it is possible to plot just the centers of each

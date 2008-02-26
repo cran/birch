@@ -3,10 +3,9 @@
 \alias{birch.addToTree}
 \alias{birch.getTree}
 \alias{birch.killTree}
-\title{Create a CF Tree }
+\title{Create a birch object }
 \description{
-  This function creates a birch object using a CF-tree. The output are
-  the subclusters, and not the full tree object.
+  This function creates a birch object using the algorithm BIRCH. 
 }
 
 \usage{
@@ -57,9 +56,24 @@ birch.killTree(birchObject)
   summary statistics of each subcluster, as used by the subsequent
   algorithms) is not returned , and so this command should be followed
   by \code{birch.getTree} command in order to ensure that the correct
-  information is used. A birch object without summary information is
-  referred to as a \dQuote{birch skeleton}. Most algorithms will check for the presence of
-  summary data, and request the information if required, but it is
+  information is used. In other words,
+  \preformatted{
+    ## Create the tree
+    myobject <- birch(x, 0.1, keeptree=TRUE)
+    
+    ## myobject has no information - let's get some
+    myobject <- birch.getTree(myobject)
+
+    ## add some data
+    birch.addToTree(y, mybirch)
+
+    ## myobject is now out of date! Until
+    mybirch <- birch.getData(mybirch)
+  }
+
+  A birch object without summary information is referred to as a
+  \dQuote{birch skeleton}. Most algorithms will check for the presence
+  of summary data, and request the information if required, but it is
   better for the user to request the data directly.
   
   The birch object produced by the algorithm has a number of compatible
@@ -68,25 +82,29 @@ birch.killTree(birchObject)
 
   The selection of the parameters for forming the birch object is left
   up to the user, though some guidance is given in \cite{Harrington and
-  Salibian-Barrera (2007)}. One consideration is the purpose -
-  for example, if only summary statistics are required,
-  then a large compactness and radius can be selected, as granularity is
-  not required. Similarly, in the case of clustering and robust methods, if a refinement
-  step is being done after the birch algorithm is completed, then the
-  subclusters can be less granular. 
+  Salibian-Barrera (2007)}. One consideration is the purpose - for
+  example, if simple summary statistics are required (means, covariances
+  etc), then a large compactness and radius can be selected, as
+  granularity is not required. In the case of clustering and robust
+  methods when a refinement step is being done after the birch algorithm
+  is completed, then once again the radius and compactness can be
+  larger. If there is no refinement step, however, then the selection of
+  these parameters is much more important.
+  
 }
 \note{
-  In this implementation, a physical limit has been set at matrices
-  with at most 30 columns. It is the intention that this limit will be
-  eventually removed in future versions of the package. If the user
-  desires, this limit can be increased in the file \sQuote{ll.h}. Other
-  than these, there is no practical limit (excluding those imposed by
-  the operating system and R) for how many observations can be placed in
-  a birch object. In particular, sine we retain the observation numbers
+  
+  In this implementation, a limit of matrices with 30 columns has been
+  set. It is the intention that this limit will be eventually removed in
+  future versions of the package. If the user desires, this limit can be
+  increased in the file \sQuote{ll.h}. Other than the matrix column
+  limit, there is no practical limit (excluding those imposed by the
+  operating system and R) for how many observations can be placed in a
+  birch object. In particular, since we retain the observation numbers
   belonging to each subcluster, the maximum length of a vector
   containing integers will determine how large the birch tree can get.
 
-  Some information for developers is provided in the doc subdirectory of
+  Some information for developers is provided in the doc directory of
   this package.
 }
   

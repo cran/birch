@@ -3,7 +3,7 @@
 \docType{data}
 \title{A birch object for demonstration purposes}
 
-\description{A birch object created from a simulated data for the
+\description{A birch object created from simulated data for the
   purposes of demonstration}
 
 \usage{data(birchObj)}
@@ -34,7 +34,8 @@
     ## Create data set
     set.seed(1234) 
     x <- mvrnorm(1.5e5, mu=rep(0,5), Sigma=diag(1,5))
-    x <- rbind(x, mvrnorm(1e5, mu=rep(10,5), Sigma=diag(0.1,5)+0.9))
+    x <- rbind(x, mvrnorm(1e5, mu=rep(10,5),
+                          Sigma=diag(0.1,5)+0.9))
 
     ## Create birch object, and save it
     birchObj <- birch(x, 5)

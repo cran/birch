@@ -5,38 +5,52 @@
   Working with very large data sets using BIRCH.
 }
 \description{
+  
   The functions in this package are designed for working with very large
-  data sets, but pre-processing them with an algorithm called BIRCH
+  data sets by pre-processing the data set with an algorithm called BIRCH
   (Balanced Iterative Reducing and Clustering using Hierarchies), which
-  represents a data set by compact subclusters, each with summary
-  statistics (called clustering features). Then, instead of using the
-  full data set, these subclusters can be used.
+  transforms the data set into compact, locally similar subclusters,
+  each with summary statistics attached (called clustering
+  features). Then, instead of using the full data set, these summary
+  statistics can be used.
 
-  Commonly, the most advantage with this approach can be obtained with
-  combinatorial problems, since (a) the whole data set need not be held
-  in memory, and (b) the dimension of the solution space is vastly
-  reduced, making it easier to maximise/minimise the objective function.
-
+  This approach is most advangeous in two situations: when the data
+  cannot be loaded into memory due to its size; and/or when some form of
+  combinatorial optimization is required and the size of the solution
+  space makes finding global maximums/minimums difficult.
+  
   A complete explanation of this package is given in \cite{Harrington
   and Salibian-Barrera (2008)}, and discussion of the underlying
-  algorithm can be found in \cite{Harrington
+  algorithms can be found in \cite{Harrington
   and Salibian-Barrera (2007)}.
 
-  Documentation for developers can be found in the doc subdirectory of
-  this package.
+  Documentation for developers can be found in the doc directory of
+  this package. Also, the source code contains dOxygen tags for further
+  information.
+  
 }
 \details{
-\tabular{ll}{
-Package: \tab birch\cr
-Type: \tab Package\cr
-Version: \tab 1.1-2\cr
-Date: \tab 2008-02-22\cr
-License: \tab GPL\cr
-}
-The main functions are \code{\link{birch}}, \code{\link{covMcd.birch}},
-\code{\link{lts.birch}}, \code{\link{rlga.birch}}, and
-\code{\link{kmeans.birch}}. Various generic methods are present,
-including those for \code{print}, \code{summary} and \code{plot}.
+  The main function is
+  \tabular{ll}{
+    \code{\link{birch}} \tab takes a data set (an R object, text file, etc),
+    and creates a birch object\cr
+  }
+  Various generic methods are present, including
+  \tabular{l}{
+    \code{print} \cr
+    \code{summary}\cr
+    \code{plot}\cr
+  }
+  Finally, some combinatorial-style problems have been
+  implemented. These include:
+  \tabular{ll}{
+  \code{\link{covMcd.birch}} \tab Minimum Covariance Determinant
+  (robust estimator for location and dispersion)\cr
+  \code{\link{lts.birch}} \tab Least Trimmed Squares (robust regression estimator) \cr
+  \code{\link{rlga.birch}} \tab Robust Linear Grouping Analysis (robust
+  clustering about hyperplanes)\cr
+  \code{\link{kmeans.birch}} \tab k-means\cr
+  }
 }
 \author{
 Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
@@ -55,6 +69,7 @@ Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \emai
 \keyword{ package }
 \seealso{
   \code{\link{birch}}, \code{\link{covMcd.birch}},
-  \code{\link{lts.birch}}, \code{\link{rlga.birch}}
-
+  \code{\link{lts.birch}}, \code{\link{rlga.birch}},
+  \code{\link{plot.birch}}.
 }
+

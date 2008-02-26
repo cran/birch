@@ -1,6 +1,6 @@
 \name{kmeans.birch}
 \alias{kmeans.birch}
-\title{ K-means with Birch}
+\title{ K-means with BIRCH}
 \description{
   Perform the k-means clustering algorithm using a birch object.
 }
@@ -8,8 +8,7 @@
 kmeans.birch(birchObject, centers, nstart = 1)
 }
 \arguments{
-  \item{birchObject}{ An object created by the function
-    \code{\link{birch}}. Contains a CF-tree.} 
+  \item{birchObject}{ An object created by the function \code{\link{birch}}.} 
   \item{centers}{ Either the number of clusters or a set of initial (distinct)
     cluster centres.  If a number, a random set of (distinct)
     subclusters in \sQuote{birchObject} is chosen as the initial centres.}
@@ -18,7 +17,7 @@ kmeans.birch(birchObject, centers, nstart = 1)
 }
 
 \details{
-  The data given by \sQuote{birchObject} is clustered by the k-means
+  The birch object given by \sQuote{birchObject} is clustered by the k-means
   method, adjusted for dealing with birch objects. The aim is to
   partition the subclusters into k groups such that the sum of squares
   of all the points in each subcluster to the assigned cluster centers
@@ -31,8 +30,8 @@ kmeans.birch(birchObject, centers, nstart = 1)
   references.
 }
 \note{
-  In order for this algorithm to produce meaningful results, the length
-  of the birch  object be in the hundreds, and even better, thousands.
+  In order for this algorithm to produce meaningful results, the number
+  of subclusters in the birch object should number in the hundreds, and even better, thousands.
   }
 
 \value{

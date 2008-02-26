@@ -11,7 +11,7 @@ dist.birch(birchObject, \dots)
 }
 \arguments{
   \item{birchObject}{An object created by the function
-    \code{\link{birch}}. Contains a CF-tree.} 
+    \code{\link{birch}}.} 
   \item{\dots}{ Further arguments passed to \code{dist}.}
 }
 \details{

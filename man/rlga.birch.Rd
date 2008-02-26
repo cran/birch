@@ -3,29 +3,31 @@
 \alias{lga.birch}
 \title{ Finding the Robust/Non-Robust LGA solution using BIRCH }
 \description{
-Performs Linear Grouping Analysis (LGA) and Robust Linear Grouping Analysis (RLGA) on a BIRCH object.
+  Performs Linear Grouping Analysis (LGA) and Robust Linear Grouping
+  Analysis (RLGA) using a BIRCH object.
 }
 \usage{
 lga.birch(birchObject, k, nsamp=100)
 rlga.birch(birchObject, k, alpha=0.5, nsamp=100)
 }
 \arguments{
-  \item{birchObject}{an object created by the function \code{\link{birch}}. Contains a CF-tree}
+  \item{birchObject}{an object created by the function \code{\link{birch}}.}
   \item{k}{the number of clusters}
   \item{alpha}{numeric parameter controlling the size of the subsets
-    over which the determinant is minimized, i.e., alpha*n observations
-    are used for computing the determinant. Allowed values are between
+    over which the orthogonal residuals are minimized, i.e., alpha*n observations
+    are used when calculating orthogonal residuals in
+    the hyperplane calculations. Allowed values are between
     0.5 and 1 and the default is 0.5.}
   \item{nsamp}{number of subsets used for initial estimates}
 }
 \details{
-Robust Linear Grouping (\cite{Garcia-Escudero et al, 2007}) is the
-robust implementation of LGA (\cite{Van Aelst et al, 2006}), and is
-concerned with clustering around hyperplanes. The non-birch versions can
-be found in the package \code{lga}, which is also available on CRAN.
-
-This algorithm is the equivalent design for use with a BIRCH object. For
-further details, please see \cite{Harrington and Salibian-Barrera (2007)}.
+  Robust Linear Grouping (\cite{Garcia-Escudero et al, 2007}) is the
+  robust implementation of LGA (\cite{Van Aelst et al, 2006}), and is
+  concerned with clustering around hyperplanes. The non-birch versions can
+  be found in the package \code{lga}, which is also available on CRAN.
+  
+  This algorithm is the equivalent design for use with a BIRCH object. For
+  further details, please see \cite{Harrington and Salibian-Barrera (2007)}.
 }
 \value{
   Returns a list containing:
@@ -37,9 +39,9 @@ further details, please see \cite{Harrington and Salibian-Barrera (2007)}.
     fitted hyperplanes based on the best data set.}
 }
 \note{
-  In order for this algorithm to produce meaningful results, the length
-  of the birch  object be in the hundreds, and even better, thousands.
-  }
+  In order for this algorithm to produce meaningful results, the number
+  of subclusters in the birch object should be in the hundreds, and even better, thousands.
+}
 \references{ 
   Garcia-Escudero, L.A. and Gordaliza, A. and San Martin, R. and Van
   Aelst, S. and Zamar, R. (2007) \dQuote{Robust Linear Clustering},
@@ -63,8 +65,7 @@ further details, please see \cite{Harrington and Salibian-Barrera (2007)}.
 \author{
 Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
 }
-\seealso{\code{\link{birch}}, \code{\link{covMcd.birch}},
-  \code{\link{lts.birch}}, and the non-birch algorithms
+\seealso{\code{\link{birch}}, and the non-birch algorithms
   \code{\link[pkg:lga]{lga}} and \code{\link[pkg:lga]{rlga}}}
 \examples{
 library(MASS) ## for mvrnorm
