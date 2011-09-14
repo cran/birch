@@ -27,7 +27,7 @@ ltsBirch.refinement(ltsOut, x, y, alpha=0.5, intercept = FALSE)
   The algorithm is very similar to the \code{ltsRef} function from the robustbase
   package from \cite{Rousseeuw and Van Driessen (2006)}, except it uses
   a BIRCH object instead. A complete description is given in \cite{Harrington and
-  Salibian-Barrera (2007)} and \cite{Harrington and Salibian-Barrera (2008)}
+  Salibian-Barrera (2010)} and \cite{Harrington and Salibian-Barrera (2008)}
 
   The algorithm assumes that the last column of the birch object
   contains the response variable, and that all the other columns are
@@ -57,16 +57,13 @@ ltsBirch.refinement(ltsOut, x, y, alpha=0.5, intercept = FALSE)
     data set (based on the LTS regression equation).}
 }
 \references{
-  Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+  Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
     Approximate Solutions to Combinatorial Problems with Very Large
-    Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-    and Software, 2nd Special Issue} Computational Statistics and Data
-  Analysis. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch.pdf}.
+    Datasets using BIRCH}, \emph{Computational Statistics and Data
+  Analysis} 54, 655-667.
   
-  Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical
-    Software}. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch-jss.pdf}. 
+  Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper. 
   
   Rousseeuw, P.J. and Van Driessen, K. (2006) \dQuote{Computing LTS
     Regression for Large Data Sets}, \emph{Data Mining and Knowledge
@@ -75,7 +72,7 @@ ltsBirch.refinement(ltsOut, x, y, alpha=0.5, intercept = FALSE)
 \author{
   Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
 }
-\seealso{ \code{\link{birch}}, and the original algorithm  \code{\link[pkg:robustbase]{ltsReg}}}
+\seealso{ \code{\link{birch}}, and the original algorithm  \code{\link[robustbase:ltsReg]{ltsReg}}}  
 \examples{
 data(birchObj)
 ltsOut <- lts.birch(birchObj, 0.5)

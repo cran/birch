@@ -37,22 +37,20 @@
     x <- rbind(x, mvrnorm(1e5, mu=rep(10,5),
                           Sigma=diag(0.1,5)+0.9))
 
-    ## Create birch object, and save it
+    ## Create birch object (without tree), and save it
     birchObj <- birch(x, 5)
     save(birchObj, file="birchObj.rda")
   }
 }
 
 \references{
-  Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+  Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
     Approximate Solutions to Combinatorial Problems with Very Large
-    Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-    and Software, 2nd Special Issue} Computational Statistics and Data
-  Analysis. \url{http://www.stat.ubc.ca/~harringt/birch.pdf}.
+    Datasets using BIRCH},  \emph{Computational Statistics and Data
+  Analysis} 54, 655-667. 
   
-  Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical Software}. \url{http://www.stat.ubc.ca/~harringt/birch-jss.pdf}.
+  Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper. 
   }
 \examples{
 data(birchObj)

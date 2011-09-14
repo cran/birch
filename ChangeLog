@@ -1,5 +1,16 @@
 Change Log
 ==========
+Version 1.2
+* Update DESCRIPTION and some man files
+* Fix some bugs in birch.addToTree: Adjust the parameter in addToNode (LL_adddata)
+to add the new data at the end of the vector.
+* Fix some warnings concerning pkg links in .rd files : covMcd.birch.Rd,
+Rlga.birch.Rd and Lts.birch.Rd
+* Modify birch.[ to create a new tree for the new birch object 
+when the old one has one
+* Modify cbind.birch to killTree of resulting birch object to prevent
+the use of getTree which erases the changes done by cbind
+* Change of maintainer
 
 Version 1.1-3
 * Update DESCRIPTION and some man files (typos)

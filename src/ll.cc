@@ -10,15 +10,16 @@
 #include "ll.h"
 // Define global variables
 int DIM;
+
 double RADIUS;
 double COMPACTNESS;
 static SEXP RRP_birch_tag;
 static void _birch_free(SEXP XPtr);
 
 /**
-   The function LL_main is the work horse. It initilizes the tree, takes in a matrix feeds the underlying object 
+   The function LL_main is the work horse. It initilizes the tree, takes in a matrix feeds the underlying object
    headed up by Parent (a pointer to the class Node), and then returns the data, or the tree.
-   
+
    @param[in] X the matrix containing data
    @param[in] R the radius criteria for forming the tree
    @param[in] COMPACT the compactness criteria for forming the tree
@@ -28,11 +29,11 @@ static void _birch_free(SEXP XPtr);
 extern "C" {
 
   SEXP LL_main ( SEXP X, SEXP R, SEXP COMPACT, SEXP RETTREE) {
-    // assign global variables 
+    // assign global variables
     DIM = ncols( X );
     RADIUS = REAL(R)[0];
     COMPACTNESS = REAL(COMPACT)[0];
-    
+
     //  Create the top node
     mdebug2("Creating Parent Node\n");
 
@@ -40,15 +41,19 @@ extern "C" {
 
     // Load the data
     int nrx = nrows ( X );
-    double mydata[DIM];
+    //double mydata[DIM]; variably-dimensioned array, specific to GNU
+    double *mydata = new double[DIM];
+    
+    
+    
     for (int i=0; i < nrx; i++ ) {
-      for (int j=0; j < DIM; j++ ) 
-	mydata[j] = REAL ( X ) [i + j*nrx];
+      for (int j=0; j < DIM; j++ )
+    mydata[j] = REAL ( X ) [i + j*nrx];
 
 #ifdef debug2
       std::cout << "\nAdding Observation " << i << std::endl;;
 #endif
-    
+
       Parent->addToNode ( mydata, i + 1 );
     }
 
@@ -66,13 +71,61 @@ extern "C" {
       SEXP outputs;
       PROTECT ( outputs = allocVector ( VECSXP,  4) );
       Parent->returnData ( &outputs);
-      delete Parent; 
+      delete Parent;
       UNPROTECT ( 1 );
       return ( outputs );
     }
   }
 
-} 
+}
+
+
+/** The function LL_assign makes a copy of the tree by creating a series of new pointer. It is design to handle the selection of all or some
+    leafs and/or variables (for birch.[).
+    @param[in] XPtr the external pointer to the tree to copy
+    @param[in] kLeaf the vector indicating witch leafs to copy
+    @param[in] kVar the vector indicating witch variables to copy
+    @return outputs (a list, containing the usual CFs), pointer (of type SEXP, but this time contains a pointer instead)
+*/
+extern "C" {
+    SEXP LL_assign ( SEXP XPtr , SEXP kVar, SEXP kLeaf, SEXP oldD ){
+      mdebug4("In LL_assign  \n");
+
+      Node * original = (Node *) R_ExternalPtrAddr ( XPtr );
+      CHECK_BIRCH_OBJECT ( XPtr );
+
+      R_len_t  na, nb;
+      int *xkVar, *xkLeaf;
+      PROTECT(kVar = coerceVector(kVar, INTSXP));
+      PROTECT(kLeaf = coerceVector(kLeaf, INTSXP));
+      na = length(kVar);
+      nb = length(kLeaf);
+      xkVar = INTEGER(kVar); xkLeaf = INTEGER(kLeaf);
+      UNPROTECT(2);
+
+      DIM=na;
+      int nrxL = nb;
+      int oldDIM = *INTEGER(oldD);
+      int kLeafCount = 0;
+      int leafCount = 0;
+
+      //Create empty parent Node*/
+      Node * Parent = new Node(NULL);
+
+      //Copy the tree with selected clusters and variables
+      Parent->copyTree( original , xkVar, xkLeaf,  &kLeafCount, &leafCount, &nrxL, &oldDIM);
+
+      //Return a pointer
+      SEXP pointer;
+      PROTECT(pointer = R_MakeExternalPtr (Parent, RRP_birch_tag, R_NilValue));
+      R_RegisterCFinalizerEx(pointer, _birch_free, TRUE);
+      UNPROTECT(1);
+      return ( pointer );
+      return(XPtr);
+
+  }
+}
+
 
 /**
    The function LL_killtree removes the tree from memory (by firing off a series of destructors), and then nulls the pointer. Returns NULL.
@@ -95,7 +148,7 @@ void _birch_free(SEXP XPtr){
 }
 
 /**
-   The function LL_getdata recieves a pointer (which is an external pointer telling us where the parent is). 
+   The function LL_getdata recieves a pointer (which is an external pointer telling us where the parent is).
    We then call returndata (part of the class Node), passing by assignment the SEXP type output vector
    @param[in] XPtr the external pointer from which to start the loading
    @return outputs (of type SEXP. Is a list, containing the usual CFs.)
@@ -112,28 +165,25 @@ extern "C" {
   }
 }
 
-/** 
+/**
     The function LL_adddata takes a pointer to the Parent, and a matrix SEXP, and loads more data onto the tree.
     It keeps the same radii as before, and returns NULL.
     @param[in] XPtr the external pointer from which to start the loading
     @param[in] X the matrix containing data
 */
 extern "C" {
-   SEXP LL_adddata ( SEXP XPtr , SEXP X) {
+   SEXP LL_adddata ( SEXP XPtr , SEXP X, SEXP Y ) {
      CHECK_BIRCH_OBJECT ( XPtr );
      Node * Parent = (Node *) R_ExternalPtrAddr ( XPtr ) ;
      int nrx = nrows ( X );
-     double mydata[DIM];
+     //double mydata[DIM]; variably-dimensioned array, specific to GNU
+     double * mydata = new double[DIM];
+
      for (int i=0; i < nrx; i++ ) {
-       for (int j=0; j < DIM; j++ ) 
-	 mydata[j] = REAL ( X ) [i + j*nrx];
-       
-#ifdef debug2
-       std::cout << "\nAdding Observation " << i << std::endl;;
-#endif
-       Parent->addToNode ( mydata, i + 1 );
+       for (int j=0; j < DIM; j++ )
+            mydata[j] = REAL ( X ) [i + j*nrx];
+       Parent->addToNode ( mydata, INTEGER (Y) [1] + i + 1 );   /*LYS2011 - Adjustment of indices for adding new data*/
      }
-     
      return R_NilValue;
    }
 }
@@ -153,11 +203,11 @@ extern "C" {
     vector <Leaf *> returndata;
     Parent->getLeaves(returndata);
     int nleafs = returndata.size();
-    
+
     int N =0;
     for (int i=0; i < nleafs; i++)
       N+= returndata[i]->getN();
-    
+
     PROTECT ( outputs = allocVector (INTSXP ,  2) );
     INTEGER(outputs)[0] = nleafs;
     INTEGER(outputs)[1] = N;

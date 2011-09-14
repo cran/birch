@@ -40,7 +40,7 @@ birch.killTree(birchObject)
 \details{
   This function creates a CF-Tree not unlike that described in \cite{Zhang
     et al. (1997)}, and used in \cite{Harrington and Salibian-Barrera
-    (2007)}. A complete explanation of this package is given in
+    (2010)}. A complete explanation of this package is given in
   \cite{Harrington and Salibian-Barrera (2008)}.
 
   A full tree structure is used, as is the splitting of nodes
@@ -82,7 +82,7 @@ birch.killTree(birchObject)
 
   The selection of the parameters for forming the birch object is left
   up to the user, though some guidance is given in \cite{Harrington and
-  Salibian-Barrera (2007)}. One consideration is the purpose - for
+  Salibian-Barrera (2010)}. One consideration is the purpose - for
   example, if simple summary statistics are required (means, covariances
   etc), then a large compactness and radius can be selected, as
   granularity is not required. In the case of clustering and robust
@@ -113,16 +113,13 @@ birch.killTree(birchObject)
 }
 
 \references{
-  Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+  Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
     Approximate Solutions to Combinatorial Problems with Very Large
-    Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-    and Software, 2nd Special Issue} Computational Statistics and Data
-  Analysis. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch.pdf}.
+    Datasets using BIRCH}, \emph{Computational Statistics and Data
+  Analysis} 54, 655-667.
   
-  Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical
-    Software}. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch-jss.pdf}.
+  Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper.
   
   Zhang, T. and Ramakrishnan, R. and Livny, M. (1997) \dQuote{BIRCH: A New
     Data Clustering Algorithm and Its Applications}, \emph{Data Mining and
@@ -142,19 +139,19 @@ x <- mvrnorm(1e5, mu=rep(0,5), Sigma=diag(1,5))
 x <- rbind(x, mvrnorm(1e5, mu=rep(10,5), Sigma=diag(0.1,5)+0.9))
 
 ## Create birch object
-birchObj <- birch(x, 5)
+birchObj <- birch(x, 5, keeptree = TRUE)
 
 ## To load directly from a file or connection
-\dontrun{birchObj <- birch("myfile.csv", 1, sep=",", hedaer=TRUE)}
+\dontrun{birchObj <- birch("myfile.csv", 1, sep=",", header=TRUE)}
 \dontrun{birchObj <- birch("http://www.dot.com/myfile.csv", 1, sep=",",
-hedaer=TRUE)}
+header=TRUE)}
 
 ## Leaving a tree in memory
 birchObj <- birch(x, 5, keeptree=TRUE)
 birch.addToTree(x, birchObj)
 birchObj <- birch.getTree(birchObj)
-## And don't forget to...
-birch.killTree(birchObj)
+## And don't forget to killTree...
+#birch.killTree(birchObj)
 }
 
 \keyword{multivariate}

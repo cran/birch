@@ -7,7 +7,7 @@ birch <- function (x, radius, compact=radius, keeptree=FALSE, ...) {
   if (is.matrix(x))
     if(ncol(x) == 1)
       stop("Must be a matrix of at least two columns.")
-  
+
   birchObject <- list()
   attributes(birchObject) <- list(class="birch", radius=radius, compact=compact)
   if (is.matrix(x)){
@@ -27,7 +27,7 @@ birch <- function (x, radius, compact=radius, keeptree=FALSE, ...) {
     xdim <- .Call("LL_getdim", attr(birchObject, "internal"))
     attr(birchObject, "xdim") <- c(xdim[2], tmp[[3]], xdim[1])
   }
-  
+
   if (!keeptree){
     ## get back the data
     birchObject <- birch.getTree(birchObject)
@@ -35,6 +35,7 @@ birch <- function (x, radius, compact=radius, keeptree=FALSE, ...) {
     ## Kill the tree
     birch.killTree(birchObject)
     attr(birchObject,"internal") <- NULL
+
   }
 
   return(birchObject)
@@ -52,20 +53,25 @@ birch.addToTree <- function(x, birchObject, updateDIM=TRUE, ...){
   if (is.matrix(x)){
       if (ncol(x) != dim(birchObject)[2])
         stop("Columns in data set do not match those in tree.")
-      .Call("LL_adddata", attr(birchObject,"internal"), matrix(as.double(x), ncol = ncol(x)))
+       nombredobs <- .Call("LL_getdim", attr(birchObject,"internal"))
+
+      .Call("LL_adddata", attr(birchObject,"internal"), matrix(as.double(x), ncol = ncol(x)), nombredobs)
+
   }
   else {
     tmp <- birch.file(x, birchObject, keeptree=TRUE, ...)
   }
+ 
   ## In case the output is assigned
-  outputs <- birchObject
+  tmp <- birch.getTree(birchObject) ##modif LYS
+  outputs <- birchObject 
   outputs$sumXi <- outputs$sumXisq <- outputs$N <- NULL
   if (updateDIM){
-    xdim <- .Call("LL_getdim", attr(birchObject, "internal"))
-    attr(outputs,"xdim") <- c(xdim[2], dim(birchObject)[2], xdim[1])
+    ##xdim <- .Call("LL_getdim", attr(birchObject, "internal"))
+    attr(outputs,"xdim") <- c(dim(tmp)[1], dim(tmp)[2], dim(tmp)[3])
   }
   else
-    attr(outputs,"xdim") <- c(NA, dim(birchObject)[2], NA)
+    attr(outputs,"xdim") <- c(NA, dim(tmp)[2], NA)
   return(outputs)
 }
 
@@ -78,7 +84,7 @@ birch.getTree <- function(birchObject){
 
   ## get the data back from the tree
   birchObject[1:4] <- .Call("LL_getdata", attr(birchObject, "internal"))
-  birchObject[[2]] <- t(birchObject[[2]])
+  birchObject[[2]] <- t(birchObject[[2]])      ##t() transpose matrice
   attr(birchObject, "names") <- c("N","sumXi","sumXisq", "members")
   attr(birchObject, "xdim") <- c(sum(birchObject$N), ncol(birchObject$sumXi), length(birchObject$N))
   return(birchObject)
@@ -99,7 +105,7 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
   ## Get the attributes
   radius <- attr(birchObj, "radius")
   compact <- attr(birchObj, "compact")
-  
+
   ## If the tree exists, then add to it
   addToTree <- !is.null(attr(birchObj, "internal"))
 
@@ -111,7 +117,7 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
   if (!inherits(file, "connection"))
     stop("'file' must be a character string or a connection")
 
-  
+
   cat("Progress: ")
   progressChars <- c("\174", "\057", "\055", "\134")
   counter <- 1
@@ -135,7 +141,7 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
                                   as.double(radius), as.double(compact), as.integer(1)),
                                 xdim=c(NA, ncol(first), NA))
   }
-  
+
   ## Then the remainder
   BLOCKSIZE <- floor(1e5/ncol(first)) ## Reads this many rows in at one go
   incomplete <- isDataLeft(file)
@@ -160,7 +166,7 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
     n <- sum(fulltree$N[whichones])
     ## Calc new mean
     zbar <- colSums(fulltree$sumXi[whichones,, drop=FALSE])/n
-    
+
     ## New Sd
     Sz <- 1/(n - 1) * (rowSums(fulltree$sumXisq[,, whichones, drop=FALSE], dims=2) - n * zbar %*% t(zbar))
     ## Calc new std dev

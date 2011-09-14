@@ -21,13 +21,13 @@ rlga.birch(birchObject, k, alpha=0.5, nsamp=100)
   \item{nsamp}{number of subsets used for initial estimates}
 }
 \details{
-  Robust Linear Grouping (\cite{Garcia-Escudero et al, 2007}) is the
+  Robust Linear Grouping (\cite{Garcia-Escudero et al, 2010}) is the
   robust implementation of LGA (\cite{Van Aelst et al, 2006}), and is
   concerned with clustering around hyperplanes. The non-birch versions can
   be found in the package \code{lga}, which is also available on CRAN.
   
   This algorithm is the equivalent design for use with a BIRCH object. For
-  further details, please see \cite{Harrington and Salibian-Barrera (2007)}.
+  further details, please see \cite{Harrington and Salibian-Barrera (2010)}.
 }
 \value{
   Returns a list containing:
@@ -47,16 +47,13 @@ rlga.birch(birchObject, k, alpha=0.5, nsamp=100)
   Aelst, S. and Zamar, R. (2007) \dQuote{Robust Linear Clustering},
   \emph{Unpublished Manuscript}.
   
-  Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+  Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
     Approximate Solutions to Combinatorial Problems with Very Large
-    Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-    and Software, 2nd Special Issue} Computational Statistics and Data
-  Analysis. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch.pdf}.
+    Datasets using BIRCH}, \emph{Computational Statistics and Data
+    Analysis} 54, 655-667 . 
   
-  Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical
-    Software}. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch-jss.pdf}. 
+  Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper. 
   
   Van Aelst, S. and Wang, X. and Zamar, R.H. and Zhu, R. (2006)
   \dQuote{Linear grouping using orthogonal regression},
@@ -66,7 +63,7 @@ rlga.birch(birchObject, k, alpha=0.5, nsamp=100)
 Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
 }
 \seealso{\code{\link{birch}}, and the non-birch algorithms
-  \code{\link[pkg:lga]{lga}} and \code{\link[pkg:lga]{rlga}}}
+  \code{\link[lga:lga]{lga}} and \code{\link[lga:rlga]{rlga}}} 
 \examples{
 library(MASS) ## for mvrnorm
 library(birch)

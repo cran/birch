@@ -22,7 +22,7 @@
   A complete explanation of this package is given in \cite{Harrington
   and Salibian-Barrera (2008)}, and discussion of the underlying
   algorithms can be found in \cite{Harrington
-  and Salibian-Barrera (2007)}.
+  and Salibian-Barrera (2010)}.
 
   Documentation for developers can be found in the doc directory of
   this package. Also, the source code contains dOxygen tags for further
@@ -53,18 +53,16 @@
   }
 }
 \author{
-Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
+Lysiane Charest \email{lysiane.charest@hec.ca}, Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
 }
 \references{
-    Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+    Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
       Approximate Solutions to Combinatorial Problems with Very Large
-      Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-      and Software, 2nd Special Issue} Computational Statistics and Data
-    Analysis. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch.pdf}.
+      Datasets using BIRCH}, \emph{Computational Statistics and Data
+    Analysis} 54, 655-667.
     
-    Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical Software}. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch-jss.pdf}.
+    Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper.
 }
 \keyword{ package }
 \seealso{

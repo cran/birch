@@ -86,6 +86,3 @@ kmeansBirch.calcCenters <- function(x, members){
     centers[i,] <- colSums(x$sumXi[members == i,])/sum(x$N[members==i])
   return(centers)
 }
-
-
-

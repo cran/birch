@@ -89,27 +89,42 @@ will not produce the same result as
 birch(z[,1:2], 1)
 }
 Similarly, there are no guarantees for \code{cbind}.
+Moreover,  the use of indexing necessitates that the birch object was made with 
+keeptree = TRUE.
+
+Care should also be taken when using the affectation when object birch was 
+built with keeptree = TRUE, as
+ \preformatted{
+ newBirch <- birchObj
+}
+will only create a new variable (newBirch) pointing to the same object as birchObj does.
+To create a copy of a birch object, use
+ \preformatted{
+ newBirch <- birchObj[]
+}
+
+
+
 }
 \author{
-  Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
+  Lysiane Charest \email{lysiane.charest@hec.ca}, Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
 }
 
 \references{
-  Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+  Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
     Approximate Solutions to Combinatorial Problems with Very Large
-    Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-    and Software, 2nd Special Issue} Computational Statistics and Data
-  Analysis. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch.pdf}.
+    Datasets using BIRCH}, \emph{Computational Statistics and Data
+  Analysis} 54, 655-667.
   
-  Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical
-    Software}. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch-jss.pdf}. 
+  Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper. 
 }
 \seealso{\code{\link{birch}}}
 \examples{
-## Load demo birch object
+
+## Load a demo birch Object
 data(birchObj)
+
 dim(birchObj)
 newObj <- cbind(1, birchObj)
 dim(newObj)

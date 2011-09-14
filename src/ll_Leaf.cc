@@ -46,7 +46,25 @@ Leaf::Leaf () { // Constructor without data
     m_radius = 0;
 }
 
- 
+ // --------------------------------------------------------
+Leaf::Leaf ( Leaf * original, int kVar[], int * oldDIM) { // Constructor for copy with a selection of variables
+
+    mdebug4("\n In Leaf()  Constructor for copy with a selection of variables (START)");
+
+    m_CF.n = original->m_CF.n;
+    for ( int i=0; i < DIM; i++ ) {
+        m_CF.sumXi[i] = original->m_CF.sumXi[kVar[i]-1];
+        for ( int j=0; j < DIM; j++ ){
+            m_CF.sumXisq[i + DIM*j] = original->m_CF.sumXisq[kVar[i]-1 + (*oldDIM)*(kVar[j]-1)];
+        }
+    }
+    m_observations = original->m_observations;
+
+    if (DIM == *oldDIM) m_radius = original->m_radius;
+    else m_radius = 0;
+    mdebug4("\n In Leaf()  Constructor for copy with a selection of variables (END)");
+}
+
 
 // --------------------------------------------------------
 // destructors
@@ -56,7 +74,10 @@ Leaf::~Leaf() { mdebug1("In Leaf()  Destructor\n"); }
 // --------------------------------------------------------
 void Leaf::addToLeaf ( CF newCF, double newRadius, int obsnumber ) {
 
-  mdebug1("In Leaf::addToLeaf \n");
+  mdebug1("In Leaf::addToLeaf \n" );
+  #ifdef debug
+    std::cout << obsnumber;
+  #endif
 
     // Add new observation number
     m_observations.push_back ( obsnumber );
@@ -66,14 +87,14 @@ void Leaf::addToLeaf ( CF newCF, double newRadius, int obsnumber ) {
 
     // Calculate the new radius
     m_radius = newRadius;
-}	
+}
 
 
 
 // --------------------------------------------------------
 double Leaf::CalcDistance ( double y[] ) {
   mdebug1("In Leaf::CalcDistance\n");
- 
+
   double distance=0;
   if (m_CF.n != 0) {
     for (int i=0; i < DIM; i++ )
@@ -105,8 +126,8 @@ CF Leaf::CalcNewCF ( const double data[] ){
 
 
 // --------------------------------------------------------
-void Leaf::returnData ( SEXP * NinLeaf, SEXP * LeafMembers, 
-			SEXP * SumXi, SEXP * SumXiSq, int index)
+void Leaf::returnData ( SEXP * NinLeaf, SEXP * LeafMembers,
+            SEXP * SumXi, SEXP * SumXiSq, int index)
 {
   int j, *INinLeaf, *ILeafMemTmp;
   double *RSumXi, *RSumXiSq;
@@ -114,25 +135,24 @@ void Leaf::returnData ( SEXP * NinLeaf, SEXP * LeafMembers,
   // Number in leaf
   INinLeaf = INTEGER ( *NinLeaf );
   INinLeaf[index] = m_CF.n;
-  
+
   // Leaf members
   SEXP LeafMemTmp;
   PROTECT ( LeafMemTmp = allocVector ( INTSXP, m_CF.n ) );
   ILeafMemTmp = INTEGER ( LeafMemTmp );
   for ( j=0; j < m_CF.n; j++ )
     ILeafMemTmp[j] = m_observations[j];
-  SET_VECTOR_ELT ( *LeafMembers, index, LeafMemTmp ); 
+  SET_VECTOR_ELT ( *LeafMembers, index, LeafMemTmp );
   UNPROTECT(1);
 
   // sumXi
   RSumXi = REAL ( *SumXi );
   for ( j=0; j < DIM; j++ )
     RSumXi[index*DIM + j] = m_CF.sumXi[j];
-  
+
   // sumXisq
   RSumXiSq = REAL ( *SumXiSq );
   for ( j=0; j < square ( DIM ); j++ )
     RSumXiSq[index*DIM*DIM + j] = m_CF.sumXisq[j];
-      
-}
 
+}

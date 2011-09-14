@@ -4,7 +4,7 @@
 \title{Finding the Minimum Covariance Determinant using BIRCH}
 \description{
 A function that uses a birch object to find an approximate solution to
-the MCD problem. The goal is to find a subset of size $alpha \times n$
+the MCD problem. The goal is to find a subset of size $alpha \\times n$
 with the smallest determinant of sample covariance. 
 }
 \usage{
@@ -28,7 +28,7 @@ covMcdBirch.refinement(covOut, x, alpha=0.5)
   uses a birch object instead. The advantage of this approach is that it
   does not require the full data set to be held in memory and the
   solution space is smaller. Further details can be found in
-  \cite{Harrington and Salibian-Barrera (2007)} and \cite{Harrington and
+  \cite{Harrington and Salibian-Barrera (2010)} and \cite{Harrington and
     Salibian-Barrera (2008)}.
   
   If further accuracy is desired, then an additional \dQuote{refinement}
@@ -55,16 +55,13 @@ covMcdBirch.refinement(covOut, x, alpha=0.5)
   }
   
 \references{
-  Harrington, J and Salibian-Barrera, M (2007) \dQuote{Finding
+  Harrington, J. and Salibian-Barrera, M. (2010), \dQuote{Finding
     Approximate Solutions to Combinatorial Problems with Very Large
-    Datasets using BIRCH}, submitted to \emph{Statistical Algorithms
-    and Software, 2nd Special Issue} Computational Statistics and Data
-  Analysis. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch.pdf}.
+    Datasets using BIRCH}, \emph{Computational Statistics and Data
+  Analysis} 54, 655-667 .
   
-  Harrington, J and Salibian-Barrera, M (2008) \dQuote{birch: Working
-    with very large data sets}, submitted to \emph{Journal of
-    Statistical
-    Software}. A draft can be found at \url{http://www.stat.ubc.ca/~harringt/birch/birch-jss.pdf}. 
+  Harrington, J. and Salibian-Barrera, M. (2008), \dQuote{birch: Working
+    with very large data sets}, working paper. 
 
   Rousseeuw, P.J. and Van Driessen, K. (1999) \dQuote{A Fast Algorithm for
     the Minimum Covariance Determinant Estimator}, \emph{Technometrics}
@@ -73,7 +70,7 @@ covMcdBirch.refinement(covOut, x, alpha=0.5)
 \author{
 Justin Harrington \email{harringt@stat.ubc.ca} and Matias Salibian-Barrera \email{matias@stat.ubc.ca}
 }
-\seealso{\code{\link{birch}}, and the original algorithm  \code{\link[pkg:robustbase]{covMcd}}}
+\seealso{\code{\link{birch}}, and the original algorithm  \code{\link[robustbase:covMcd]{covMcd}}} 
 \examples{
 data(birchObj)
 covOut <- covMcd.birch(birchObj, 0.5)
