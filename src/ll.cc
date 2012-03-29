@@ -43,21 +43,23 @@ extern "C" {
     int nrx = nrows ( X );
     //double mydata[DIM]; variably-dimensioned array, specific to GNU
     double *mydata = new double[DIM];
-    
-    
-    
+
+
+
     for (int i=0; i < nrx; i++ ) {
       for (int j=0; j < DIM; j++ )
     mydata[j] = REAL ( X ) [i + j*nrx];
 
 #ifdef debug2
-      std::cout << "\nAdding Observation " << i << std::endl;;
+//      std::cout << "\nAdding Observation " << i << std::endl;;
 #endif
 
       Parent->addToNode ( mydata, i + 1 );
     }
 
     mdebug2("\nReturning Data\n");
+    delete [] mydata ;
+
     if (INTEGER(RETTREE)[0] == 1) {
       // Return a pointer
       SEXP pointer;
@@ -184,6 +186,7 @@ extern "C" {
             mydata[j] = REAL ( X ) [i + j*nrx];
        Parent->addToNode ( mydata, INTEGER (Y) [1] + i + 1 );   /*LYS2011 - Adjustment of indices for adding new data*/
      }
+     delete [] mydata ;
      return R_NilValue;
    }
 }
@@ -215,3 +218,124 @@ extern "C" {
     return ( outputs );
   }
 }
+
+
+
+/**
+   The function LL_boucleKendall calculate some quantities for the calculation of Kendall's tau. It takes in a matrix of the centers of clusters (for 2 variables) and the
+   number of members for each of these. It also takes in the total number of observations and then returns 2 quantities (number of concordant pairs and
+   number of inter-class pairs).
+
+   @param[in] Y the matrix containing the centers of each clusters (for 2 variables) + the number of members in each cluster
+   @param[in] N the total number of observations
+   @return outputs: number of concordant pairs and number of inter-class pairs (of type SEXP)
+*/
+
+
+extern "C" {
+
+  SEXP LL_boucleKendall ( SEXP Y, SEXP N) {
+
+    // Load the data
+    int nrx = nrows ( Y );
+    double *binomS = new double[nrx]; //y[i,(3+ dimension)]
+    double *prem = new double[nrx]; //y[i,(2+ dimension)]
+    double conc = 0;
+    double bin = 0;
+    double tmp;
+
+    binomS[nrx-1]=0;
+    prem[nrx-1]=0;
+
+    for (int i=0; i < nrx-1; i++ ) {
+        prem[i] = 0;
+        binomS[i] = 0;
+        for (int j = i+1 ; j < nrx ; j++){
+            if (REAL(Y)[i] < REAL(Y)[j]) prem[i] = prem[i] + (REAL(N)[j] * REAL(N)[i]);
+            binomS[i] = binomS[i] + (REAL(N)[j] * REAL(N)[i]);
+        }
+        conc = conc + prem[i];
+        tmp=bin;
+        bin = bin + binomS[i];
+    }
+    delete [] prem;
+    delete [] binomS;
+
+    SEXP outputs;
+    PROTECT ( outputs = allocVector( REALSXP, 2) );
+        REAL(outputs)[0] = conc;
+        REAL(outputs)[1] = bin;
+    UNPROTECT ( 1 );
+    return ( outputs );
+
+  }
+}
+
+/**
+   The function LL_boucleKendallshort calculate a quantity for the calculation of Kendall's tau. It takes in a matrix of the centers of clusters (for 2 variables) and the
+   number of members for each of these. It also takes in the total number of observations and then returns the number of concordant pairs.
+
+   @param[in] Y the matrix containing the centers of each clusters (for 2 variables) + the number of members in each cluster
+   @param[in] N the total number of observations
+   @return outputs: number of concordant pairs (of type SEXP)
+*/
+extern "C" {
+  SEXP LL_boucleKendallshort ( SEXP Y, SEXP N) {
+
+    // Load the data
+    int nrx = nrows ( Y );
+    double *prem = new double[nrx];
+    double conc = 0;
+
+    prem[nrx-1]=0;
+
+    for (int i=0; i < nrx-1; i++ ) {
+        prem[i] = 0;
+        for (int j = i+1 ; j < nrx ; j++){
+            if (REAL(Y)[i] < REAL(Y)[j]) prem[i] = prem[i] + (REAL(N)[j] * REAL(N)[i]);
+        }
+        conc = conc + prem[i];
+    }
+    delete [] prem;
+
+    SEXP outputs;
+    PROTECT ( outputs = allocVector( REALSXP, 1) );
+        REAL(outputs)[0] = conc;
+    UNPROTECT ( 1 );
+    return ( outputs );
+  }
+}
+
+
+/**
+   The function LL_boucleSpearman calculate ri for the calculation of Spearman's rho. It takes in a vector of the number of members in each cluster and then
+   returns the ri.
+
+   @param[in] Y the matrix containing the number of members in each cluster
+   @return outputs: ri (of type SEXP)
+*/
+
+extern "C" {
+
+  SEXP LL_boucleSpearman ( SEXP Y) {
+
+    // Load the data
+    int nrx = nrows ( Y );
+    double *outputTMP = new double[nrx];
+    outputTMP[0] = 0;
+    for (int i=1; i < nrx; i++ ) {
+        outputTMP[i] = outputTMP[i-1] + REAL ( Y ) [i-1];;
+    }
+
+    SEXP outputs;
+    PROTECT ( outputs = allocVector ( REALSXP,  nrx) );
+        for (int i=0; i < nrx; i++ ) {
+            REAL(outputs)[i] = outputTMP[i];
+        }
+        delete [] outputTMP;
+    UNPROTECT ( 1 );
+    return ( outputs );
+
+}
+}
+

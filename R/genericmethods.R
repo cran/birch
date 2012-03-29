@@ -15,7 +15,7 @@ summary.birch <- function(object, ...){
   N <- dim(object)[1]
   means <- colSums(object$sumXi)/N
   names(means) <- attr(object, "xcolnames")
-  covs <- (rowSums(object$sumXisq, dim=2) - N*means %o% means)/(N-1)
+  covs <- (rowSums(object$sumXisq, dims=2) - N*means %o% means)/(N-1)
   dimnames(covs) <- list(attr(object, "xcolnames"), attr(object, "xcolnames"))
   outputs <- list(means=means, covs=covs)
   class(outputs) <- "summary.birch"
@@ -30,10 +30,6 @@ print.summary.birch <- function(x, ...){
   print(x$covs, ...)
 }
 
-
-#"<-.birch" <- function() {
-#    return(value[])
-#}
 
 "[.birch" <- function(x, i= seq(attr(x, "xdim")[3]), j= seq(attr(x, "xdim")[2]) ){
     #print("In crochet")

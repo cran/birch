@@ -41,6 +41,11 @@
     \code{summary}\cr
     \code{plot}\cr
   }
+  Methods for estimating the correlation matrix are also available:
+  \tabular{l}{
+    \code{spearman} \cr
+    \code{kendall}\cr
+  }
   Finally, some combinatorial-style problems have been
   implemented. These include:
   \tabular{ll}{
@@ -68,6 +73,7 @@ Lysiane Charest \email{lysiane.charest@hec.ca}, Justin Harrington \email{harring
 \seealso{
   \code{\link{birch}}, \code{\link{covMcd.birch}},
   \code{\link{lts.birch}}, \code{\link{rlga.birch}},
-  \code{\link{plot.birch}}.
+  \code{\link{plot.birch}}, \code{\link{kendall}}, 
+  \code{\link{spearman}}.
 }
 

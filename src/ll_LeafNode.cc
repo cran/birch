@@ -72,12 +72,12 @@ LeafNode::LeafNode (Node * parentNode, Leaf * newLeaf) : Node( parentNode )
   CF myCF = (*newLeaf).getCF();
 
   #ifdef debug4
-    std::cout << "mydataDIM " << DIM;
+//    std::cout << "mydataDIM " << DIM;
   #endif
 
   //double newCenter[DIM]; variably-dimensioned array, specific to GNU
   double * newCenter = new double[DIM];
-  
+
   for (int i=0; i < DIM; i++)
     newCenter[i] = myCF.sumXi[i] / myCF.n;
   updateCenter(newCenter, myCF.n);
@@ -174,7 +174,7 @@ void LeafNode::SplitNode(){                                                     
 
 
 // --------------------------------------------------------
-double LeafNode::calcDistances(int i, int j){                                                    mdebug1("In LeafNode::calcDistances(int i, int j)\n");
+double LeafNode::calcDistances(int i, int j){                                                    //mdebug1("In LeafNode::calcDistances(int i, int j)\n");
 
   // Calculates the distance between leaves i and j
   double distance=0;

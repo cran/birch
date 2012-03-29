@@ -9,7 +9,7 @@
 }
 
 \usage{
-birch(x, radius, compact=radius, keeptree=FALSE, \dots)
+birch(x, radius, compact=radius, keeptree=FALSE, columns = NULL, \dots)
 birch.addToTree(x, birchObject, updateDIM = TRUE, ...)
 birch.getTree(birchObject)
 birch.killTree(birchObject)
@@ -20,6 +20,8 @@ birch.killTree(birchObject)
   \item{radius}{the closeness criterion}
   \item{compact}{the compactness criterion}
   \item{keeptree}{A Boolean, whether to keep the CF tree in memory.}
+  \item{columns}{the choice of variables to use if x is a file name or a 
+    connection (default is all variables)}
   \item{\dots}{Arguments to be passed to \code{read.table} for loading a
     file or connection}
   \item{updateDIM}{Update the dimension of the object? Defaults to TRUE

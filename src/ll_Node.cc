@@ -161,7 +161,7 @@ int Node::findClosest( double data[] )
     int smallest=0;
     double tmpDistance, smDistance = m_children[0]->CalcDistance(data);
 #ifdef debug3
-    std::cout << "Distances 1:\n" << smDistance;
+//    std::cout << "Distances 1:\n" << smDistance;
 #endif
 
     // find the closest child node to this data point
@@ -169,7 +169,7 @@ int Node::findClosest( double data[] )
     {
         tmpDistance = m_children[i]->CalcDistance(data);
 #ifdef debug3
-        std::cout << " " << tmpDistance;
+//        std::cout << " " << tmpDistance;
 #endif
         if (tmpDistance < smDistance)
         {
@@ -309,25 +309,41 @@ vector<int> Node::calcSplit()
     mdebug1("In Node::calcSplit\n");
 
     int i,j;
+    //double left, right; //
     int nchilds = getNchilds();
     vector<int> nodeA;
 
     //double distances[nchilds*nchilds]; variably-dimensioned array, specific to GNU
     double * distances = new double[nchilds*nchilds];
-    
-    for (i=0; i < nchilds; i++)
-        for (j=0; j < nchilds; j++)
-            distances[i + nchilds*j] = calcDistances(i,j);
-    // NB Could be more efficient here (with a upper-diag matrix)
+
+    //for (i=0; i < nchilds; i++)
+    //    for (j=0; j < nchilds; j++)
+    //        distances[i + nchilds*j] = calcDistances(i,j); //LYS
+    //        distances[i + nchilds*j] = calcDistances(i,j); //LYS
+    distances[0] = 0;
+    for ( i=0; i < nchilds-1; i++)
+        for ( j=i+1; j < nchilds; j++){
+            distances[i + nchilds*j] = calcDistances(i,j);  }
+    // NB Could be more efficient here (with a upper-diag matrix) OK DONE
 
     vector<int> widest = which_min(distances, nchilds, FALSE);
-    // Keep widest[0] in existing leaf - anything closer to widest[1] can go to new leaf
-    // remember - just dealing with indices here!!
-    for (i=0; i < nchilds; i++)
+
+    for (i=0; i < widest[0]; i++)
     {
-        if (distances[ i + nchilds*widest[1] ] < distances[ i + nchilds*widest[0] ])
+      if( distances[ i + nchilds*widest[1] ] < distances[ i + nchilds*widest[0] ] )
+        nodeA.push_back(i);
+    }
+     for (i=widest[0]; i < widest[1]; i++)
+    {
+         if( distances[ i + nchilds*widest[1] ] < distances[ widest[0] + nchilds*i ] )
             nodeA.push_back(i);
     }
+     for (i=widest[1]; i < nchilds-1; i++)
+    {
+        if( distances[ widest[1] + nchilds*i ] < distances[ widest[0] + nchilds*i ] )
+            nodeA.push_back(i);
+    }
+
 
     return (nodeA);
 }

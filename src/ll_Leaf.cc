@@ -76,7 +76,7 @@ void Leaf::addToLeaf ( CF newCF, double newRadius, int obsnumber ) {
 
   mdebug1("In Leaf::addToLeaf \n" );
   #ifdef debug
-    std::cout << obsnumber;
+//    std::cout << obsnumber;
   #endif
 
     // Add new observation number
@@ -93,7 +93,7 @@ void Leaf::addToLeaf ( CF newCF, double newRadius, int obsnumber ) {
 
 // --------------------------------------------------------
 double Leaf::CalcDistance ( double y[] ) {
-  mdebug1("In Leaf::CalcDistance\n");
+//  mdebug1("In Leaf::CalcDistance\n");
 
   double distance=0;
   if (m_CF.n != 0) {

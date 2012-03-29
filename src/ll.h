@@ -1,11 +1,11 @@
 #ifndef LL_H_
 #define LL_H_
 #define MAXD 30 /* Specify max number of dimensions */
-#define MAXL 100 /* Max number of Node Children */
-#define MAXB 100 /* Max number of LeafNodeChildren */
+#define MAXL 40 /* Max number of Node Children */
+#define MAXB 40 /* Max number of LeafNodeChildren */
 
 //#define debug /* debug flag */
-//#define debug /* Minimal */
+//#define debug2 /* Minimal */
 //#define debug3 /* for leaf decisions */
 //#define debug4  /*For variably-dimensioned arrays and birch.[*/
 
@@ -246,22 +246,22 @@ inline double square ( double x ) { return x * x; }
 
 inline void mdebug1 ( const char output[] ) {
 #ifdef debug
-  std::cout << output;
+//  std::cout << output;
 #endif
 }
 inline void mdebug2 ( const char output[] ) {
 #ifdef debug2
-  std::cout << output;
+  //std::cout << output;
 #endif
 }
 inline void mdebug3 ( const char output[] ) {
 #ifdef debug3
-  std::cout << output;
+  //std::cout << output;
 #endif
 }
 inline void mdebug4 ( const char output[] ) {
 #ifdef debug4
-  std::cout << output;
+ // std::cout << output;
 #endif
 }
 

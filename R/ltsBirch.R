@@ -3,17 +3,17 @@
     stop("Not a birch object.")
   if (is.null(birchObject$sumXi))
     birchObject <- birch.getTree(birchObject)
- 
-  
+
+
   if (intercept) birchObject <- cbind.birch(1, birchObject)
   d <- dim(birchObject)[2]
   N <- dim(birchObject)[1]
   Nleafs <- length(birchObject)
-  
+
   ## Validate arguments
   if (alpha < 0.5 || alpha > 1)
     stop("alpha must be in (0.5, 1].")
-    
+
   ## create/amend additional data
   ## Much care is taken if x is a vector, as solve kicks up a fuss
   birchObject$xtx <- birchObject$sumXisq[1:(d-1), 1:(d-1), , drop=FALSE] ## Dimension = (d-1) * (d-1) * n
@@ -21,14 +21,14 @@
   birchObject$ytx <- birchObject$sumXisq[1:(d-1), d, ]  ## Dimension = (d-1) * n
   if (is.null(dim(birchObject$ytx)))
     attributes(birchObject$ytx)$dim <- c(1, Nleafs)
-  
+
   birchObject$xtxlong <- birchObject$xtx
   attributes(birchObject$xtxlong)$dim <- c(d-1, (d-1) * Nleafs)
   birchObject$xtxlong <- t(birchObject$xtxlong) ## Dimension = (n*d) * d
   ## Let's tidy some memory
   birchObject$sumXisq <- birchObject$sumXi <- NULL
   gc()
-  
+
   h <- alpha * N ## h is the number required in the subset
   whichones <- ltsBirch.startlist(birchObject, Nleafs, d, nsamp)
   if (length(whichones) == 0)
@@ -116,13 +116,13 @@ ltsBirch.refinement <- function(ltsOut, x, y, alpha=0.5, intercept=FALSE){
     x <- as.matrix(x)
   if (intercept)
     x <- cbind(1,x)
-  
+
   ## Validate arguments
   if (alpha < 0.5 || alpha > 1)
     stop("alpha must be between 0.5 and 1.")
   if (length(ltsOut$raw.coefficients) != ncol(x))
     stop("Dimensions of ltsOut and x do not match.")
-    
+
   betas <- ltsOut$raw.coefficients
   counter <- 0
   oldbeta <- NULL

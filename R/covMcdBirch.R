@@ -3,21 +3,21 @@
     stop("Not a birch object.")
   if (is.null(birchObject$sumXi))
     birchObject <- birch.getTree(birchObject)
-  
+
   d <- dim(birchObject)[2]
   N <- dim(birchObject)[1]
   Nleafs <- length(birchObject)
-  
+
   h <- alpha * N  ## h is the number required in the subset
   whichones <- covMcdBirch.startlist(birchObject, Nleafs, d, nsamp)
-  
+
   ## Validate arguments
   if (length(whichones) < nsamp)
     warning("Not enough subclusters of full rank. nsamp has been reduced.")
   if (alpha < 0.5 || alpha > 1)
     stop("alpha must be in (0.5, 1].")
-  
-  detS <- rep(NA, length(whichones)) 
+
+  detS <- rep(NA, length(whichones))
   CstepOut <- list()
 
   cat("Progress: ")
@@ -36,7 +36,7 @@
   outputs <- list(zbar=bestData$params$zbar, Sz=bestData$params$Sz, Det=detS[best],
               best=list(obs=mysubset, sub=bestData$H))
   class(outputs) <- "covMcd.birch"
-  return(outputs)  
+  return(outputs)
 }
 
 summary.covMcd.birch <- function(object, ...){
@@ -47,7 +47,7 @@ summary.covMcd.birch <- function(object, ...){
   cat("Estimate of dispersion\n")
   print(object$Sz, ...)
 }
-      
+
 covMcdBirch.startlist <- function(fulltree, Nleafs, d, nsamp){
   targetsamp <- min(Nleafs, nsamp)
   startlist <- NULL

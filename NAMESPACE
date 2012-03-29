@@ -18,5 +18,7 @@ export(birch, birch.addToTree, birch.getTree, birch.killTree)
 ## Robust
 export(lts.birch, covMcd.birch, rlga.birch, ltsBirch.refinement, covMcdBirch.refinement)
 ## Clustering
-export(lga.birch, kmeans.birch, dist.birch) 
+export(lga.birch, kmeans.birch, dist.birch)
+## Correlation
+export(spearman, kendall)
 useDynLib(birch, LL_main)

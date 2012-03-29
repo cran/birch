@@ -1,10 +1,10 @@
 Package: birch
 Type: Package
-Depends: ellipse
+Depends: R (>= 2.10), ellipse
 Suggests: MASS
 Title: Dealing with very large datasets using BIRCH
-Version: 1.2
-Date: 2011-09-14
+Version: 1.2-1
+Date: 2012-03-29
 Author: Lysiane Charest, Justin Harrington, Matias Salibian-Barrera
 Maintainer: Lysiane Charest <lysiane.charest@hec.ca>
 Description: birch is an implementation of the algorithms described in
@@ -14,6 +14,6 @@ Description: birch is an implementation of the algorithms described in
         well suited for dealing with very large data sets, and does not
         require that the data can fit in physical memory.
 License: GPL
-Packaged: 2011-09-16 20:15:32 UTC; Lysiane
+Packaged: 2012-03-30 00:51:17 UTC; lysiane
 Repository: CRAN
-Date/Publication: 2011-09-16 20:54:31
+Date/Publication: 2012-03-30 04:41:30

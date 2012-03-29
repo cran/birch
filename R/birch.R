@@ -1,4 +1,5 @@
-birch <- function (x, radius, compact=radius, keeptree=FALSE, ...) {
+birch <- function (x, radius, compact=radius, keeptree=FALSE, columns = NULL, ...) {
+
   ## Argument validation
   if (!is.character(x) & !inherits(x, "connection") & !is.matrix(x))
     stop("Must specify either a matrix, file name or connection.")
@@ -21,7 +22,7 @@ birch <- function (x, radius, compact=radius, keeptree=FALSE, ...) {
   }
   else {
     ## Getting data from a file/connection
-    tmp <- birch.file(x, birchObject, keeptree, ...)
+    tmp <- birch.file(x, birchObject, keeptree, columns = columns, ...)
     attr(birchObject, "internal") <- tmp[[1]]
     attr(birchObject, "xcolnames") <- tmp[[2]] ## Gets the column names
     xdim <- .Call("LL_getdim", attr(birchObject, "internal"))
@@ -61,10 +62,10 @@ birch.addToTree <- function(x, birchObject, updateDIM=TRUE, ...){
   else {
     tmp <- birch.file(x, birchObject, keeptree=TRUE, ...)
   }
- 
+
   ## In case the output is assigned
   tmp <- birch.getTree(birchObject) ##modif LYS
-  outputs <- birchObject 
+  outputs <- birchObject
   outputs$sumXi <- outputs$sumXisq <- outputs$N <- NULL
   if (updateDIM){
     ##xdim <- .Call("LL_getdim", attr(birchObject, "internal"))
@@ -101,7 +102,7 @@ birch.killTree <- function(birchObject){
   .Call("LL_killtree", attr(birchObject,"internal"))
 }
 
-birch.file <- function(file, birchObj, keeptree, header, ...){
+birch.file <- function(file, birchObj, keeptree, header, columns = NULL,  ...){
   ## Get the attributes
   radius <- attr(birchObj, "radius")
   compact <- attr(birchObj, "compact")
@@ -118,7 +119,7 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
     stop("'file' must be a character string or a connection")
 
 
-  cat("Progress: ")
+  #cat("Progress: ")
   progressChars <- c("\174", "\057", "\055", "\134")
   counter <- 1
   open(file, "r")
@@ -126,6 +127,11 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
   ## Load first 10 lines
   first <- as.matrix(read.table(file, nrows=10,
                                 header=ifelse(missing(header), FALSE, header), ...))
+
+
+  ## Keep only selected columns
+  if (!(is.null(columns)))  first <- first[,columns]
+
   if (ncol(first) > 30)
     stop("Matrix can only have up to 30 columns")
 
@@ -148,12 +154,14 @@ birch.file <- function(file, birchObj, keeptree, header, ...){
   while (incomplete){
     cat(progressChars[(counter-1) %% 4 + 1])
     data <- as.matrix(read.table(file, nrows=BLOCKSIZE, header=FALSE, ...))
+
+    ## Keep only selected columns
+    if (!(is.null(columns)))  data <- data[,columns]
     birch.addToTree(data, pointer)
     incomplete <- isDataLeft(file)
     cat("\b"); counter <- counter+1
   }
-  cat("done\n")
-
+  #cat("done\n")
   return(list(attr(pointer, "internal"), colnames(first), ncol(first)))
 }
 
