@@ -1,5 +1,8 @@
 Change Log
 ==========
+Version 1.2-2
+* Fix 1 bug causing 'segfault' on OS X platform
+
 Version 1.2-1
 * Add spearman and kendall function to compute approximation of Spearman's
 and Kendall's tau. See ?spearman and ?kendall for further details

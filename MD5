@@ -1,5 +1,5 @@
-3edb0c8b35629161af50ca07dc1b1101 *ChangeLog
-a97419db78ca7e39c621832e641617db *DESCRIPTION
+33819673ada1bdd8389f8acebed299a3 *ChangeLog
+1ec7f9fb73d9c2c1b41bd8976f81d3e8 *DESCRIPTION
 d77143d222ed90cdf11351c06776dab5 *NAMESPACE
 27a3545fecd2ee87b8c7b81a722b16e6 *R/birch.R
 25564b069919851c6988c2676e1e6835 *R/cluster.R
@@ -8,7 +8,7 @@ f71818a05c72e9b99df86335a1106a6d *R/covMcdBirch.R
 761d6a4e3ec749e1b79f7cb9aa5576bd *R/genericmethods.R
 5a2e647cce1ce7852ed4767ba631464c *R/ltsBirch.R
 2d0bd528f78101b7292befe340b61dda *R/rlgaBirch.R
-b6d56d8fe5b86065a23fa44b0bf71e8a *data/birchObj.rda
+e531a88527fa1268a52001057ca85f53 *data/birchObj.rda
 42f87de7c2c4222271b164b46463f48d *inst/doc/birchAPI.pdf
 dc5063dd58b690ae39373185482ff267 *man/birch-package.Rd
 ba69ece5af558536c59e4d452fcf6b20 *man/birch.Rd
@@ -16,14 +16,14 @@ c5dbe7285d6190f2d20eb13250e944ad *man/birchObj.Rd
 ed846926561cf8a90cfc8217105ee5b2 *man/covMcd.birch.Rd
 d845bb4d89ac336a2d57b211a6b0e8e4 *man/dist.birch.Rd
 2d720934eae00c6f372ff2fed6ed5123 *man/generic.Rd
-ddbd1a3115f5ef5bfc0eb5a66d6422ac *man/kendall.Rd
+7c40c6d3d4260ec67188bdcdefd8637c *man/kendall.Rd
 0b8fa4226081a198903811a00ff61098 *man/kmeans.birch.Rd
 6547718afd582be78e49d07686f33d6f *man/lts.birch.Rd
 21a895ff73ad85a13dc9fe4e7efb8f50 *man/rlga.birch.Rd
-c8612d62a08c1c1d49dffa6b6c0f87fb *man/spearman.Rd
+54d70cdea8baa4db7fda5492f5e5a658 *man/spearman.Rd
 446fa588837b9138f9890c312bf5df24 *src/ll.cc
 df6f5397ff7f0172652288934ffe7216 *src/ll.h
 e2ef73f0b1bfedc2ca0d0316f28a8c39 *src/ll_Leaf.cc
 898c3b94ee457047d9f956c73bf7b235 *src/ll_LeafNode.cc
-d0a6fecd5c4bb16b8362c4f04bd39cc9 *src/ll_Node.cc
+258d10aa411fdf69fcdef68ca1633604 *src/ll_Node.cc
 5c2347d8ff479e511c1a7f78d3c2ec79 *src/ll_other.cc

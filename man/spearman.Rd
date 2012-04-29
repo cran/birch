@@ -1,9 +1,9 @@
 \name{spearman}
 \alias{spearman}
-\title{Estimating Spearman's correlation matrix using BIRCH}
+\title{Estimating Spearman's matrix of correlation using BIRCH}
 \description{
-This function builds an estimate of the correlation matrix from a birch 
-object or from a dataset. In the last case, it uses birch algorithm to pre-process
+This function builds an estimate of the matrix of Spearman's correlation from a birch 
+object or from a dataset. In the latter case, it uses the birch algorithm to pre-process
 the data. 
 
 The Spearman's rho is used as the correlation measure.
@@ -14,8 +14,8 @@ spearman(x, radius, compact = radius, columns = NULL,  estimate , ... )
 \arguments{
   \item{x}{a birch object, a numeric matrix of at least two columns, a file name or a
     connection that is compatible with \code{read.table}.}
-  \item{radius}{the closeness criterion (not used if x is a birch object)}
-  \item{compact}{the compactness criterion (not used if x is a birch object)}
+  \item{radius}{the closeness criterion (unused if x is a birch object)}
+  \item{compact}{the compactness criterion (unused if x is a birch object)}
   \item{columns}{the choice of variables to use if x is a file name or a connection (default is all variables)}
   \item{estimate}{the choice of corrections to use for the estimation ("Student" and "Woodbury")}
   \item{\dots}{arguments to be passed to \code{read.table} for loading a
@@ -28,7 +28,7 @@ spearman(x, radius, compact = radius, columns = NULL,  estimate , ... )
   
   First version:
   For each pair of variables, one birch object is created using the radius and compactness 
-  criteria. The estimations are based on the summary statistics resulting of the usage 
+  criteria. Estimation is based on the summary statistics resulting from the usage 
   of birch algorithm that regroups data in compact clusters. 
   The advantage of this approach is that it does not require the full data set to be held 
   in memory. Further details can be found in
@@ -38,8 +38,7 @@ spearman(x, radius, compact = radius, columns = NULL,  estimate , ... )
   pair of variables.
   
   Second version:
-  For each pair of variables, the correlation is estimated based on the summary statistics 
-  corresponding to them. 
+  For each pair of variables, the correlation is estimated based on their own summary statistics.
   
   Estimates:
   \describe{
@@ -52,7 +51,7 @@ spearman(x, radius, compact = radius, columns = NULL,  estimate , ... )
 \value{
   Returns a list with components:
     \item{nClus}{matrix showing the number of clusters used for the estimation of each coefficient}
-    \item{estimate[,,i]}{one correlation matrix estimate for each selected correction}
+    \item{estimate[,,i]}{one matrix of correlation estimate for each selected correction}
 }
 
   
@@ -74,7 +73,7 @@ set.seed(1234)
 x <- mvrnorm(1e5, mu=rep(0,5), Sigma=diag(1,5))
 x <- rbind(x, mvrnorm(1e5, mu=rep(10,5), Sigma=diag(0.1,5)+0.9))
 
-##Create csv for the example
+##Create a csv for the example
 write.csv(x,"csvExample.csv", row.names=FALSE)
 
 ## Create a birch object
@@ -82,17 +81,17 @@ birchObj <- birch(x, radius = 5, keeptree = TRUE)
 birchObj <- birch.getTree(birchObj)
 
 ##With x: birch object. 
-##In this example, altough the birch object was created with V1-V5, 
+##In this example, although the birch object was created with V1-V5, 
 ##we only want the estimates for V2, V4 and V5
 fromBirchObj <- spearman(birchObj[,c(2,4,5)], estimate = c("student", "woodbury"))
 
 
 ##With x: dataset. 
-##In this example, we requiere estimates for every variables
+##In this example, we require estimates for every variable
 fromDataset <- spearman(x, radius = 5, estimate = c("student", "woodbury"))
 
 ##With x: file name or connection
-##In this example, we requiere estimates for variables V2, V4 and V5 only
+##In this example, we require estimates for variables V2, V4 and V5 only
 fromFile <- spearman("csvExample.csv", 1, sep=",", header=TRUE, radius = 5, columns = c(2,4,5), 
 estimate = c("student", "woodbury"))
 \dontrun{fromConnection <- spearman("http://www.dot.com/myfile.csv", 1, sep=",",
