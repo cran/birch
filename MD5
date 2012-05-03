@@ -1,5 +1,5 @@
-33819673ada1bdd8389f8acebed299a3 *ChangeLog
-1ec7f9fb73d9c2c1b41bd8976f81d3e8 *DESCRIPTION
+987456e31490e1975dea98c5bb189e58 *ChangeLog
+a96c10d9035bfc72a58aa0f41b02ca3d *DESCRIPTION
 d77143d222ed90cdf11351c06776dab5 *NAMESPACE
 27a3545fecd2ee87b8c7b81a722b16e6 *R/birch.R
 25564b069919851c6988c2676e1e6835 *R/cluster.R
@@ -24,6 +24,6 @@ d845bb4d89ac336a2d57b211a6b0e8e4 *man/dist.birch.Rd
 446fa588837b9138f9890c312bf5df24 *src/ll.cc
 df6f5397ff7f0172652288934ffe7216 *src/ll.h
 e2ef73f0b1bfedc2ca0d0316f28a8c39 *src/ll_Leaf.cc
-898c3b94ee457047d9f956c73bf7b235 *src/ll_LeafNode.cc
-258d10aa411fdf69fcdef68ca1633604 *src/ll_Node.cc
+e34b8f8d940edfeb7684f67b62dbfaf1 *src/ll_LeafNode.cc
+398be3e655f49361afd9e0011eec52ac *src/ll_Node.cc
 5c2347d8ff479e511c1a7f78d3c2ec79 *src/ll_other.cc

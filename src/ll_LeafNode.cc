@@ -29,6 +29,10 @@ bool LeafNode::copyTreeLeafNode( LeafNode * original, int kVar[], int kLeaf[], i
 
     setNchilds(0);
     setNobs(0);
+//Possiblement que le problème vient d'ici dans le while. Sinon, il peut venir des paramètres passes a la fctn. Il faudra les suivre
+//en mode debug de valgrind OU en ajouter des cout…
+
+
     while ( ((kLeaf[*kLeafCount]) <= (*leafCount) + original->getNchilds()) &  (*kLeafCount < *nrxL)){
         if (!atLeast1Leaf)  {
             m_children[0] = ( new Leaf(original->m_children[kLeaf[(*kLeafCount)] - (*leafCount) - 1], kVar ,oldDIM )); /*Copy leaf*/

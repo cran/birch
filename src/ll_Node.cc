@@ -9,6 +9,7 @@
 #include <typeinfo>
 #include <cstring>
 
+
 // Bring in the global variables
 extern int DIM;
 extern double RADIUS;
@@ -316,7 +317,7 @@ vector<int> Node::calcSplit()
 
     //double distances[nchilds*nchilds]; variably-dimensioned array, specific to GNU
     double * distances = new double[nchilds*nchilds];
-    memset((void*) distances, 0, nchilds* nchilds*sizeof(double));
+    std::memset((void*) distances, 0, nchilds* nchilds*sizeof(double));
 
     //for (i=0; i < nchilds; i++)
     //    for (j=0; j < nchilds; j++)
